@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "ComposeTemplate"
+rootProject.name = "MarvelHeroes"
 include(":app")

@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.hadiyarajesh.composetemplate"
+    namespace = "com.hadiyarajesh.marvel_heroes"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.hadiyarajesh.composetemplate"
+        applicationId = "com.hadiyarajesh.marvel_heroes"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
@@ -73,6 +73,8 @@ dependencies {
 
     implementation(libs.moshi)
     ksp(libs.moshi.kotlin.codegen)
+
+    implementation(libs.androidx.paging.compose)
 
     implementation(libs.coil) {
         because("An image loading library for Android backed by Kotlin Coroutines")
