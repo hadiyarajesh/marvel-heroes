@@ -63,8 +63,8 @@ fun CharacterDetailRoute(
         onRetryClick = {
             detailsViewModel.getCharacterDetails(characterId)
         },
-        onBookmarkClick = { characterId ->
-            bookmarkViewModel.bookmarkCharacter(characterId = characterId)
+        onBookmarkClick = { charId ->
+            bookmarkViewModel.bookmarkCharacter(characterId = charId)
         },
         onBackClick = onBackClick
     )
