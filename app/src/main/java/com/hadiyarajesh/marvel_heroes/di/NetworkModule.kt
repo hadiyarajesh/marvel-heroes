@@ -1,8 +1,8 @@
 package com.hadiyarajesh.marvel_heroes.di
 
 import com.hadiyarajesh.marvel_heroes.BuildConfig
-import com.hadiyarajesh.marvel_heroes.network.MarvelApi
-import com.hadiyarajesh.marvel_heroes.network.RequestInterceptor
+import com.hadiyarajesh.marvel_heroes.data.network.MarvelApi
+import com.hadiyarajesh.marvel_heroes.data.network.RequestInterceptor
 import com.hadiyarajesh.marvel_heroes.utility.Constants
 import com.squareup.moshi.Moshi
 import dagger.Module

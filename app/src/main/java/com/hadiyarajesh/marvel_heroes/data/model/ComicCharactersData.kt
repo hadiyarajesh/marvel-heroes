@@ -1,6 +1,6 @@
-package com.hadiyarajesh.marvel_heroes.network.model
+package com.hadiyarajesh.marvel_heroes.data.model
 
-import com.hadiyarajesh.marvel_heroes.data.entity.ComicCharacter
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

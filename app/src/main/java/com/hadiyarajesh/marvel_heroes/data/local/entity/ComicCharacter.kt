@@ -1,15 +1,18 @@
-package com.hadiyarajesh.marvel_heroes.data.entity
+package com.hadiyarajesh.marvel_heroes.data.local.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @Entity
 @JsonClass(generateAdapter = true)
 data class ComicCharacter(
-    @PrimaryKey
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val _id: Int = 0,
+    @Json(name = "id")
+    val characterId: Int,
     val name: String,
     val description: String,
     val modified: String,

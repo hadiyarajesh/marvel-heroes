@@ -1,5 +1,6 @@
-package com.hadiyarajesh.marvel_heroes.network
+package com.hadiyarajesh.marvel_heroes.data.network
 
+import com.hadiyarajesh.marvel_heroes.BuildConfig
 import com.hadiyarajesh.marvel_heroes.utility.HashGenerator
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -10,8 +11,8 @@ class RequestInterceptor : Interceptor {
         val request = chain.request()
 
         val timestamp = Random.nextInt(10000, 99999).toString()
-        val apiPublicKey = "9b4a79ad4a27def8ec8b5f4ff3edd92d"
-        val apiPrivateKey = "d5476af6b7fcb17b078d170bf6f81f0d55b1e37e"
+        val apiPublicKey = BuildConfig.apiPublicKey
+        val apiPrivateKey = BuildConfig.apiPrivateKey
         val hashInputString = timestamp + apiPrivateKey + apiPublicKey
         val generatedHash = HashGenerator.generateMD5(hashInputString)
 

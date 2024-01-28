@@ -1,9 +1,9 @@
-package com.hadiyarajesh.marvel_heroes.network.model
+package com.hadiyarajesh.marvel_heroes.data.model
 
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class SearchCharactersResponse(
+data class GetCharactersResponse(
     val code: Int,
     val status: String,
     val copyright: String,

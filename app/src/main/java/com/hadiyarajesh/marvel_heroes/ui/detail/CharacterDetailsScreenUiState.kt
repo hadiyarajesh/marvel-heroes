@@ -1,7 +1,7 @@
 package com.hadiyarajesh.marvel_heroes.ui.detail
 
-import com.hadiyarajesh.marvel_heroes.data.entity.ComicCharacter
-import com.hadiyarajesh.marvel_heroes.data.entity.Message
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
+import com.hadiyarajesh.marvel_heroes.data.local.entity.Message
 
 /**
  * Sealed class to represent UI states in [HomeScreen]

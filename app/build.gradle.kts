@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -66,6 +67,7 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(libs.bundles.room)
+    implementation(libs.room.paging)
     ksp(libs.room.compiler)
 
     implementation(libs.bundles.retrofit)

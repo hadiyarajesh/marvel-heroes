@@ -32,7 +32,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.hadiyarajesh.marvel_heroes.R
-import com.hadiyarajesh.marvel_heroes.data.entity.ComicCharacter
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
 import com.hadiyarajesh.marvel_heroes.utility.CharacterUtility
 import com.hadiyarajesh.marvel_heroes.utility.comicCharacter1
 import com.hadiyarajesh.marvel_heroes.utility.comicCharacters
@@ -78,11 +78,11 @@ fun ComicCharactersGridView(
                 }
 
                 loadState.refresh is LoadState.Error -> {
-//                    val errorMessage = (posts.loadState.refresh as LoadState.Error).error.message
                     item(span = { GridItemSpan(maxLineSpan) }) {
                         ErrorItem(
                             modifier = Modifier.fillMaxSize(),
-                            text = "Something went wrong"
+                            text = (characters.loadState.refresh as LoadState.Error).error.message
+                                ?: "Something went wrong"
 //                            onRetryClick = { retry() }
                         )
                     }
