@@ -1,11 +1,9 @@
 package com.hadiyarajesh.marvel_heroes.ui.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,6 +12,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,12 +27,11 @@ import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
 import com.hadiyarajesh.marvel_heroes.ui.components.ComicCharactersGridView
 import com.hadiyarajesh.marvel_heroes.ui.components.HorizontalSpacer
 import com.hadiyarajesh.marvel_heroes.utility.comicCharacters
-import com.hadiyarajesh.marvel_heroes.utility.debugLog
 import kotlinx.coroutines.flow.flowOf
-
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.paging.LoadState
 
 @Composable
 fun HomeRoute(
@@ -44,7 +43,7 @@ fun HomeRoute(
     val comicCharacters = homeViewModel.comicCharacters.collectAsLazyPagingItems()
 
     HomeScreen(
-        comicCharacters = comicCharacters,
+        characters = comicCharacters,
         onCharacterClick = onCharacterClick,
         onBookmarkClick = onBookmarkClick,
         onSearchClick = onSearchClick
@@ -54,11 +53,26 @@ fun HomeRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    comicCharacters: LazyPagingItems<ComicCharacter>,
+    characters: LazyPagingItems<ComicCharacter>,
     onCharacterClick: (ComicCharacter) -> Unit,
     onBookmarkClick: () -> Unit,
     onSearchClick: () -> Unit
 ) {
+    val pullToRefreshState = rememberPullToRefreshState()
+
+    if (pullToRefreshState.isRefreshing) {
+        characters.refresh()
+    }
+
+    LaunchedEffect(characters.loadState) {
+        when (characters.loadState.refresh) {
+            is LoadState.Loading -> Unit
+            is LoadState.Error, is LoadState.NotLoading -> {
+                pullToRefreshState.endRefresh()
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,17 +90,23 @@ fun HomeScreen(
             )
         }
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .nestedScroll(pullToRefreshState.nestedScrollConnection)
         ) {
             ComicCharactersGridView(
                 modifier = Modifier.fillMaxSize(),
-                characters = comicCharacters,
+                characters = characters,
                 onClick = { comicCharacter ->
                     onCharacterClick(comicCharacter)
                 }
+            )
+
+            PullToRefreshContainer(
+                modifier = Modifier.align(Alignment.TopCenter),
+                state = pullToRefreshState
             )
         }
     }
@@ -100,7 +120,7 @@ fun HomeScreenPreview() {
     val comicCharacters = flow.collectAsLazyPagingItems()
 
     HomeScreen(
-        comicCharacters = comicCharacters,
+        characters = comicCharacters,
         onCharacterClick = { },
         onSearchClick = {},
         onBookmarkClick = {}

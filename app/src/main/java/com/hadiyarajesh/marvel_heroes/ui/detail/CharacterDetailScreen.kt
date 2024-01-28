@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -34,6 +35,7 @@ import com.hadiyarajesh.marvel_heroes.R
 import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
 import com.hadiyarajesh.marvel_heroes.ui.components.ErrorItem
 import com.hadiyarajesh.marvel_heroes.ui.components.LoadingIndicator
+import com.hadiyarajesh.marvel_heroes.ui.components.TopAppBarWithBackButton
 import com.hadiyarajesh.marvel_heroes.ui.components.VerticalSpacer
 import com.hadiyarajesh.marvel_heroes.utility.CharacterUtility
 
@@ -65,16 +67,9 @@ fun CharacterDetailScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = { onBackClick() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.go_back)
-                        )
-                    }
-                },
-                title = { Text(text = stringResource(R.string.character_details_screen_title)) }
+            TopAppBarWithBackButton(
+                title = stringResource(R.string.character_details_screen_title),
+                onBackClick = onBackClick
             )
         }
     ) { innerPadding ->
@@ -97,7 +92,12 @@ fun CharacterDetailScreen(
                 }
 
                 is CharacterDetailsScreenUiState.Error -> {
-                    ErrorItem(text = (characterUiState as CharacterDetailsScreenUiState.Error).msg)
+                    ErrorItem(
+                        modifier = Modifier.fillMaxSize(),
+                        text = (characterUiState as CharacterDetailsScreenUiState.Error).msg,
+                        showRetryButton = true,
+                        onRetryClick = { characterDetailsViewModel.getCharacterDetails(characterId) }
+                    )
                 }
 
                 else -> {}
@@ -128,7 +128,7 @@ fun CharacterDetailsScreen(
             )
         }
 
-        VerticalSpacer(size = 8)
+        VerticalSpacer(size = 12)
         Text(
             text = character.name,
             style = MaterialTheme.typography.titleLarge

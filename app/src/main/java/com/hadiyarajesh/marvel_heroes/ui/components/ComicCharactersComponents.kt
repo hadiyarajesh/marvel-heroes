@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,8 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
@@ -67,7 +70,25 @@ fun ComicCharactersGridView(
             when {
                 loadState.refresh is LoadState.Loading -> {
                     item(span = { GridItemSpan(maxLineSpan) }) {
-                        LoadingIndicator(modifier = Modifier.fillMaxSize())
+                        LoadingIndicator(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .aspectRatio(1f)
+                        )
+                    }
+                }
+
+                loadState.refresh is LoadState.Error -> {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        ErrorItem(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .aspectRatio(1f),
+                            text = (characters.loadState.refresh as LoadState.Error).error.message
+                                ?: stringResource(R.string.something_went_wrong),
+                            showRetryButton = true,
+                            onRetryClick = { refresh() }
+                        )
                     }
                 }
 
@@ -77,23 +98,14 @@ fun ComicCharactersGridView(
                     }
                 }
 
-                loadState.refresh is LoadState.Error -> {
-                    item(span = { GridItemSpan(maxLineSpan) }) {
-                        ErrorItem(
-                            modifier = Modifier.fillMaxSize(),
-                            text = (characters.loadState.refresh as LoadState.Error).error.message
-                                ?: "Something went wrong"
-//                            onRetryClick = { retry() }
-                        )
-                    }
-                }
-
                 loadState.append is LoadState.Error -> {
                     item(span = { GridItemSpan(maxLineSpan) }) {
                         ErrorItem(
                             modifier = Modifier.fillMaxWidth(),
-                            text = "Something went wrong"
-//                            onRetryClick = { retry() }
+                            text = (characters.loadState.append as LoadState.Error).error.message
+                                ?: stringResource(R.string.something_went_wrong),
+                            showRetryButton = true,
+                            onRetryClick = { retry() }
                         )
                     }
                 }
@@ -151,7 +163,8 @@ private fun ComicCharacterItemPreview() {
                 RoundedCornerShape(16.dp)
             ),
         character = comicCharacter1,
-        onClick = {})
+        onClick = {}
+    )
 }
 
 @Preview

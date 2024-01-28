@@ -78,9 +78,7 @@ dependencies {
 
     implementation(libs.androidx.paging.compose)
 
-    implementation(libs.coil) {
-        because("An image loading library for Android backed by Kotlin Coroutines")
-    }
+    implementation(libs.coil)
 
     implementation(libs.flower) {
         because("Flower simplifies networking and database caching on Android/Multiplatform")

@@ -2,11 +2,14 @@ package com.hadiyarajesh.marvel_heroes.ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,8 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.hadiyarajesh.marvel_heroes.R
 
 /**
  * Create a [Spacer] of given width in [dp]
@@ -56,14 +61,26 @@ fun LoadingIndicator(
 fun ErrorItem(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.error
+    color: Color = MaterialTheme.colorScheme.error,
+    showRetryButton: Boolean = false,
+    onRetryClick: () -> Unit = {}
 ) {
     Box(modifier = modifier) {
-        Text(
-            text = text,
+        Column(
             modifier = Modifier.align(Alignment.Center),
-            color = color
-        )
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = text,
+                color = color
+            )
+
+            if (showRetryButton) {
+                Button(onClick = onRetryClick) {
+                    Text(text = stringResource(R.string.retry))
+                }
+            }
+        }
     }
 }
 

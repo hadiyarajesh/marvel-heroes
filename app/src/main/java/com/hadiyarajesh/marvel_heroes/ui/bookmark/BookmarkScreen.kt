@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.hadiyarajesh.marvel_heroes.R
+import com.hadiyarajesh.marvel_heroes.ui.components.TopAppBarWithBackButton
 
 @Composable
 fun BookmarkRoute(
@@ -25,23 +26,16 @@ fun BookmarkRoute(
     BookmarkScreen(onBackClick = onBackClick)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookmarkScreen(
     onBackClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = { onBackClick() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.go_back)
-                        )
-                    }
-                },
-                title = { Text(text = "Bookmarks") })
+            TopAppBarWithBackButton(
+                title = stringResource(R.string.bookmark_screen_title),
+                onBackClick = onBackClick
+            )
         }
     ) { innerPadding ->
         Column(
