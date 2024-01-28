@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Marvel Heroes</string>
-    <string name="go_back">Go back</string>
+    <string name="back">Back</string>
+    <string name="clear">Clear</string>
     <string name="retry">Retry</string>
     <string name="something_went_wrong">Something went wrong</string>
-    <string name="character_details_screen_title">Character Details</string>
-    <string name="bookmark_screen_title">Bookmarks</string>
+    <string name="character_details">Character Details</string>
+    <string name="bookmark">Bookmarks</string>
+    <string name="comics">Comics</string>
+    <string name="search_for_characters">Search for Characters</string>
 </resources>

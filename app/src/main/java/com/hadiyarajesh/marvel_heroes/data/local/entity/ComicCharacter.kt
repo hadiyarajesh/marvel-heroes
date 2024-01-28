@@ -6,25 +6,27 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@Entity
-@JsonClass(generateAdapter = true)
-data class ComicCharacter(
+@Entity(tableName = "ComicCharacter")
+data class ComicCharacterEntity(
     @PrimaryKey(autoGenerate = true)
-    val _id: Int = 0,
-    @Json(name = "id")
+    val id: Int = 0,
     val characterId: Int,
     val name: String,
     val description: String,
     val modified: String,
     @Embedded(prefix = "thumbnail")
     val thumbnail: Thumbnail,
-    val resourceURI: String,
-//    val comics: Comics,
-//    val urls: List<Url>
+    val resourceURI: String
 )
 
 @JsonClass(generateAdapter = true)
 data class Thumbnail(
     val path: String,
     val extension: String
+)
+
+@JsonClass(generateAdapter = true)
+data class Url(
+    val type: String,
+    val url: String
 )

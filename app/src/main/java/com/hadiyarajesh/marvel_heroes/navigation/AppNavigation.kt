@@ -48,11 +48,20 @@ fun AppNavigation(
         }
 
         composable(route = TopLevelDestination.Bookmarks.route) {
-            BookmarkRoute(onBackClick = { navController.popBackStack() })
+            BookmarkRoute(
+                onCharacterClick = { character ->
+                    navController.navigate(TopLevelDestination.CharacterDetails.withArgs(character.characterId))
+                },
+                onBackClick = { navController.popBackStack() }
+            )
         }
 
         composable(route = TopLevelDestination.Search.route) {
-            SearchRoute()
+            SearchRoute(
+                onCharacterClick = { character ->
+                    navController.navigate(TopLevelDestination.CharacterDetails.withArgs(character.characterId))
+                },
+                onBackClick = { navController.popBackStack() })
         }
     }
 }

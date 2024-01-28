@@ -1,7 +1,9 @@
 package com.hadiyarajesh.marvel_heroes.di
 
-import com.hadiyarajesh.marvel_heroes.repository.CharacterRepository
-import com.hadiyarajesh.marvel_heroes.repository.CharacterRepositoryImpl
+import com.hadiyarajesh.marvel_heroes.repository.bookmark.BookmarkRepository
+import com.hadiyarajesh.marvel_heroes.repository.bookmark.BookmarkRepositoryImpl
+import com.hadiyarajesh.marvel_heroes.repository.character.CharacterRepository
+import com.hadiyarajesh.marvel_heroes.repository.character.CharacterRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,5 +13,8 @@ import dagger.hilt.android.components.ViewModelComponent
 @InstallIn(ViewModelComponent::class)
 abstract class RepositoryModule {
     @Binds
-    abstract fun bindHomeRepository(homeRepositoryImpl: CharacterRepositoryImpl): CharacterRepository
+    abstract fun bindCharacterRepository(characterRepositoryImpl: CharacterRepositoryImpl): CharacterRepository
+
+    @Binds
+    abstract fun bindBookmarkRepository(bookmarkRepositoryImpl: BookmarkRepositoryImpl): BookmarkRepository
 }

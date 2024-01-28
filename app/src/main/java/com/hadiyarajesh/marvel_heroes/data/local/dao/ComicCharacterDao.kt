@@ -5,25 +5,35 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
-import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
+import com.hadiyarajesh.marvel_heroes.data.model.CharacterAndComics
 
 @Dao
 interface ComicCharacterDao {
     @Upsert
-    suspend fun upsertCharacter(comicCharacter: ComicCharacter)
+    suspend fun upsertCharacter(comicCharacter: ComicCharacterEntity)
 
     @Upsert
-    suspend fun upsertCharacters(comicCharacter: List<ComicCharacter>)
+    suspend fun upsertCharacters(comicCharacter: List<ComicCharacterEntity>)
 
-    @Query("SELECT * FROM ComicCharacter ORDER BY _id ASC")
-    fun getAllCharacters(): PagingSource<Int, ComicCharacter>
+    @Query("SELECT * FROM ComicCharacter ORDER BY id ASC")
+    fun getAllCharacters(): PagingSource<Int, ComicCharacterEntity>
+
+    @Query("SELECT * FROM ComicCharacter WHERE characterId IN (:characterIds)")
+    suspend fun getAllCharactersByIdIn(characterIds: List<Int>): List<ComicCharacterEntity>
 
     @Query("SELECT * FROM ComicCharacter WHERE characterId = :id")
-    suspend fun getComicCharacter(id: Int): ComicCharacter?
+    suspend fun getComicCharacter(id: Int): ComicCharacterEntity?
 
     @Delete
-    suspend fun delete(comicCharacter: ComicCharacter)
+    suspend fun delete(comicCharacter: ComicCharacterEntity)
 
     @Query("DELETE FROM ComicCharacter")
     suspend fun deleteAllCharacters()
+
+    @Query("SELECT * FROM ComicCharacter WHERE characterId = :characterId")
+    suspend fun getCharacterAndComic(characterId: Int): CharacterAndComics?
+
+    @Query("SELECT * FROM ComicCharacter WHERE name LIKE '%' || :characterName || '%'")
+    suspend fun searchCharacters(characterName: String): List<ComicCharacterEntity>
 }

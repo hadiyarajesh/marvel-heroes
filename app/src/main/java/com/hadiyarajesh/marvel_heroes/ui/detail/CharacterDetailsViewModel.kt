@@ -4,26 +4,34 @@ import javax.inject.Inject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hadiyarajesh.marvel_heroes.repository.CharacterRepository
+import com.hadiyarajesh.marvel_heroes.repository.bookmark.BookmarkRepository
+import com.hadiyarajesh.marvel_heroes.repository.character.CharacterRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CharacterDetailsViewModel @Inject constructor(
-    private val characterRepository: CharacterRepository
+    private val characterRepository: CharacterRepository,
+    private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
     private val _characterUiState =
         MutableStateFlow<CharacterDetailsScreenUiState>(CharacterDetailsScreenUiState.Initial)
     val characterUiState: StateFlow<CharacterDetailsScreenUiState> get() = _characterUiState
+
+    private val _isBookmarked = MutableStateFlow<Boolean>(false)
+    val isBookmarked: StateFlow<Boolean> get() = _isBookmarked.asStateFlow()
 
     fun getCharacterDetails(characterId: Int) {
         viewModelScope.launch {
             _characterUiState.value = CharacterDetailsScreenUiState.Loading
 
             try {
-                val character = characterRepository.getComicCharacter(characterId)
-                character?.let {
+                val characterAndComic =
+                    characterRepository.getCharacterAndComic(characterId = characterId)
+
+                characterAndComic?.let {
                     _characterUiState.value = CharacterDetailsScreenUiState.Success(it)
                 } ?: run {
                     _characterUiState.value =
@@ -32,6 +40,15 @@ class CharacterDetailsViewModel @Inject constructor(
             } catch (e: Exception) {
                 CharacterDetailsScreenUiState.Error("Something went wrong. ${e.message}")
             }
+        }
+    }
+
+    fun isBookmarked(characterId: Int) {
+        viewModelScope.launch {
+            bookmarkRepository.isBookmarkedObservable(characterId = characterId)
+                .collect { isBookmarked ->
+                    _isBookmarked.value = isBookmarked
+                }
         }
     }
 }

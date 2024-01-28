@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -35,7 +36,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.hadiyarajesh.marvel_heroes.R
-import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
 import com.hadiyarajesh.marvel_heroes.utility.CharacterUtility
 import com.hadiyarajesh.marvel_heroes.utility.comicCharacter1
 import com.hadiyarajesh.marvel_heroes.utility.comicCharacters
@@ -44,8 +45,8 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 fun ComicCharactersGridView(
     modifier: Modifier = Modifier,
-    characters: LazyPagingItems<ComicCharacter>,
-    onClick: (ComicCharacter) -> Unit
+    characters: LazyPagingItems<ComicCharacterEntity>,
+    onClick: (ComicCharacterEntity) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -115,10 +116,37 @@ fun ComicCharactersGridView(
 }
 
 @Composable
+fun ComicCharactersGridView(
+    modifier: Modifier = Modifier,
+    characters: List<ComicCharacterEntity>,
+    onClick: (ComicCharacterEntity) -> Unit
+) {
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Adaptive(150.dp),
+        contentPadding = PaddingValues(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        items(characters) { comicCharacters ->
+            ComicCharacterGridItem(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.dp))
+                    .height(150.dp)
+                    .width(100.dp)
+                    .then(linearGradientBrush),
+                character = comicCharacters,
+                onClick = onClick
+            )
+        }
+    }
+}
+
+@Composable
 fun ComicCharacterGridItem(
     modifier: Modifier = Modifier,
-    character: ComicCharacter,
-    onClick: (ComicCharacter) -> Unit
+    character: ComicCharacterEntity,
+    onClick: (ComicCharacterEntity) -> Unit
 ) {
     Box(
         modifier = modifier

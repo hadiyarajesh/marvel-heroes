@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,7 +24,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.hadiyarajesh.marvel_heroes.R
-import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
 import com.hadiyarajesh.marvel_heroes.ui.components.ComicCharactersGridView
 import com.hadiyarajesh.marvel_heroes.ui.components.HorizontalSpacer
 import com.hadiyarajesh.marvel_heroes.utility.comicCharacters
@@ -31,11 +31,13 @@ import kotlinx.coroutines.flow.flowOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.paging.LoadState
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
 
 @Composable
 fun HomeRoute(
-    onCharacterClick: (ComicCharacter) -> Unit,
+    onCharacterClick: (ComicCharacterEntity) -> Unit,
     onBookmarkClick: () -> Unit,
     onSearchClick: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel()
@@ -53,8 +55,8 @@ fun HomeRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    characters: LazyPagingItems<ComicCharacter>,
-    onCharacterClick: (ComicCharacter) -> Unit,
+    characters: LazyPagingItems<ComicCharacterEntity>,
+    onCharacterClick: (ComicCharacterEntity) -> Unit,
     onBookmarkClick: () -> Unit,
     onSearchClick: () -> Unit
 ) {
@@ -84,7 +86,10 @@ fun HomeScreen(
                     HorizontalSpacer(size = 4)
 
                     IconButton(onClick = onBookmarkClick) {
-                        Icon(imageVector = Icons.Outlined.Star, contentDescription = null)
+                        Icon(
+                            painter = painterResource(id = R.drawable.outline_collections_bookmark_24),
+                            contentDescription = stringResource(id = R.string.bookmark)
+                        )
                     }
                 }
             )

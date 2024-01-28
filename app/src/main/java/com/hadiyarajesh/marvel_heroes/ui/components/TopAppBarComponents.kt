@@ -1,5 +1,6 @@
 package com.hadiyarajesh.marvel_heroes.ui.components
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,17 +16,19 @@ import com.hadiyarajesh.marvel_heroes.R
 @Composable
 fun TopAppBarWithBackButton(
     title: String,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = stringResource(R.string.go_back)
+                    contentDescription = stringResource(R.string.back)
                 )
             }
         },
-        title = { Text(text = title) }
+        title = { Text(text = title) },
+        actions = actions
     )
 }

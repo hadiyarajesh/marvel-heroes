@@ -8,16 +8,18 @@ import androidx.room.withTransaction
 import com.hadiyarajesh.marvel_heroes.data.local.AppDatabase
 import com.hadiyarajesh.marvel_heroes.data.local.dao.CharacterRemoteKeyDao
 import com.hadiyarajesh.marvel_heroes.data.local.dao.ComicCharacterDao
+import com.hadiyarajesh.marvel_heroes.data.local.dao.ComicsDao
 import com.hadiyarajesh.marvel_heroes.data.local.entity.CharacterRemoteKey
-import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
 import com.hadiyarajesh.marvel_heroes.data.network.MarvelApi
 
 @OptIn(ExperimentalPagingApi::class)
 class ComicCharactersDataSource(
     private val marvelApi: MarvelApi,
     private val appDatabase: AppDatabase
-) : RemoteMediator<Int, ComicCharacter>() {
+) : RemoteMediator<Int, ComicCharacterEntity>() {
     private val characterDao: ComicCharacterDao = appDatabase.comicCharacterDao()
+    private val comicsDao: ComicsDao = appDatabase.comicsDao()
     private val remoteKeysDao: CharacterRemoteKeyDao = appDatabase.characterRemoteKeyDao()
 
     override suspend fun initialize(): InitializeAction {
@@ -27,7 +29,7 @@ class ComicCharactersDataSource(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ComicCharacter>
+        state: PagingState<Int, ComicCharacterEntity>
     ): MediatorResult {
         return try {
             val currentPage = when (loadType) {
@@ -67,15 +69,18 @@ class ComicCharactersDataSource(
             appDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     characterDao.deleteAllCharacters()
+                    comicsDao.deleteAllComics()
                     remoteKeysDao.deleteAllRemoteKeys()
                 }
 
                 val characters = getCharactersResponse.data.results
-                characterDao.upsertCharacters(characters)
+                characterDao.upsertCharacters(characters.map { it.toEntity() })
+
+                comicsDao.upsertComics(characters.map { it.comics.toEntity(characterId = it.id) })
 
                 val keys = characters.map { character ->
                     CharacterRemoteKey(
-                        characterId = character.characterId,
+                        characterId = character.id,
                         prevKey = prevPage,
                         nextKey = nextPage
                     )
@@ -89,7 +94,7 @@ class ComicCharactersDataSource(
         }
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ComicCharacter>): CharacterRemoteKey? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ComicCharacterEntity>): CharacterRemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.characterId?.let { id ->
                 remoteKeysDao.getRemoteKey(id)
@@ -97,7 +102,7 @@ class ComicCharactersDataSource(
         }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ComicCharacter>): CharacterRemoteKey? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ComicCharacterEntity>): CharacterRemoteKey? {
         // Get the first page that was retrieved, that contained items.
         val firstPage = state.pages.firstOrNull { it.data.isNotEmpty() }
         // From that first page, get the first item
@@ -108,7 +113,7 @@ class ComicCharactersDataSource(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ComicCharacter>): CharacterRemoteKey? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ComicCharacterEntity>): CharacterRemoteKey? {
         // Get the last page that was retrieved, that contained items.
         val lastPage = state.pages.lastOrNull { it.data.isNotEmpty() }
         // From that last page, get the last item

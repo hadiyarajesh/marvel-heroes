@@ -80,10 +80,6 @@ dependencies {
 
     implementation(libs.coil)
 
-    implementation(libs.flower) {
-        because("Flower simplifies networking and database caching on Android/Multiplatform")
-    }
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

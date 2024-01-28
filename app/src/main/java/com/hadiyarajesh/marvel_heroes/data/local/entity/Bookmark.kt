@@ -4,8 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Message(
-    @PrimaryKey(autoGenerate = true)
-    val messageId: Long = 0,
-    val text: String
+data class Bookmark(
+    @PrimaryKey
+    val characterId: Int,
+    val isBookmarked: Boolean,
+    val updatedAt: Long
 )

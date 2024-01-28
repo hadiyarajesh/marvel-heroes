@@ -57,13 +57,6 @@ class NetworkModule {
             .baseUrl(Constants.MARVEL_API_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi)) // Register Moshi as a JSON converter for serialization and deserialization of objects.
-            .also { retrofit ->
-                /**
-                 * Register {@link <a href="https://github.com/hadiyarajesh/flower">Flower</a>} as a response converter for supporting method return types other than {@code Call<T>}.
-                 * Uncomment below line to add Flower support
-                 */
-//                retrofit.addCallAdapterFactory(FlowerCallAdapterFactory.create())
-            }
             .build()
     }
 

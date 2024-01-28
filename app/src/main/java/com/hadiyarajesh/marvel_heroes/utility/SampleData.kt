@@ -1,9 +1,13 @@
 package com.hadiyarajesh.marvel_heroes.utility
 
-import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacter
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicsEntity
+import com.hadiyarajesh.marvel_heroes.data.local.entity.Item
 import com.hadiyarajesh.marvel_heroes.data.local.entity.Thumbnail
+import com.hadiyarajesh.marvel_heroes.data.local.entity.Url
+import com.hadiyarajesh.marvel_heroes.data.model.CharacterAndComics
 
-val comicCharacter1 = ComicCharacter(
+val comicCharacter1 = ComicCharacterEntity(
     characterId = 1011334,
     name = "3-D Man",
     description = "",
@@ -15,7 +19,7 @@ val comicCharacter1 = ComicCharacter(
     resourceURI = "http://gateway.marvel.com/v1/public/characters/1011334",
 )
 
-val comicCharacter2 = ComicCharacter(
+val comicCharacter2 = ComicCharacterEntity(
     characterId = 1017100,
     name = "A-Bomb (HAS)",
     description = "Rick Jones has been Hulk's best bud since day one, but now he's more than a friend... he's a teammate!",
@@ -27,7 +31,7 @@ val comicCharacter2 = ComicCharacter(
     resourceURI = "http://gateway.marvel.com/v1/public/characters/1017100",
 )
 
-val comicCharacter3 = ComicCharacter(
+val comicCharacter3 = ComicCharacterEntity(
     characterId = 1009144,
     name = "A.I.M.",
     description = "AIM is a terrorist organization bent on destroying the world.",
@@ -39,7 +43,7 @@ val comicCharacter3 = ComicCharacter(
     resourceURI = "http://gateway.marvel.com/v1/public/characters/1009144",
 )
 
-val comicCharacter4 = ComicCharacter(
+val comicCharacter4 = ComicCharacterEntity(
     characterId = 1010699,
     name = "Aaron Stack",
     description = "A humanoid robot, Stack has the power of superhuman strength and can transform his body into any shape he chooses.",
@@ -51,7 +55,7 @@ val comicCharacter4 = ComicCharacter(
     resourceURI = "http://gateway.marvel.com/v1/public/characters/1010699",
 )
 
-val comicCharacter5 = ComicCharacter(
+val comicCharacter5 = ComicCharacterEntity(
     characterId = 1009146,
     name = "Abomination (Emil Blonsky)",
     description = "Formerly known as Emil Blonsky, a spy of Soviet Yugoslavian government.",
@@ -61,6 +65,33 @@ val comicCharacter5 = ComicCharacter(
         extension = "jpg"
     ),
     resourceURI = "http://gateway.marvel.com/v1/public/characters/1009146",
+)
+
+val genericItem1 = Item(
+    name = "Avengers: The Initiative (2007) #14",
+    resourceURI = "http://gateway.marvel.com/v1/public/comics/21366"
+)
+
+val genericItem2 = Item(
+    name = "Avengers: The Initiative (2007) #14 (SPOTLIGHT VARIANT)",
+    resourceURI = "http://gateway.marvel.com/v1/public/comics/24571"
+)
+
+val genericItem3 = Item(
+    name = "Avengers: The Initiative (2007) #15",
+    resourceURI = "http://gateway.marvel.com/v1/public/comics/21546"
+)
+
+val characterAndComics = CharacterAndComics(
+    character = comicCharacter1,
+    comic = ComicsEntity(
+        id = 0,
+        characterId = comicCharacter1.characterId,
+        available = 12,
+        collectionURI = "http://gateway.marvel.com/v1/public/characters/1011334/comics",
+        items = listOf(genericItem1, genericItem2, genericItem3),
+        returned = 12
+    )
 )
 
 val comicCharacters =
