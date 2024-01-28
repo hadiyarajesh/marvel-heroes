@@ -11,7 +11,7 @@ import com.hadiyarajesh.marvel_heroes.data.local.dao.ComicCharacterDao
 import com.hadiyarajesh.marvel_heroes.data.local.dao.ComicsDao
 import com.hadiyarajesh.marvel_heroes.data.local.entity.CharacterRemoteKey
 import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
-import com.hadiyarajesh.marvel_heroes.data.network.MarvelApi
+import com.hadiyarajesh.marvel_heroes.data.network.api.MarvelApi
 
 @OptIn(ExperimentalPagingApi::class)
 class ComicCharactersDataSource(

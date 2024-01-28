@@ -7,10 +7,9 @@ import androidx.paging.PagingData
 import com.hadiyarajesh.marvel_heroes.data.local.AppDatabase
 import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
 import com.hadiyarajesh.marvel_heroes.data.model.CharacterAndComics
-import com.hadiyarajesh.marvel_heroes.data.network.MarvelApi
+import com.hadiyarajesh.marvel_heroes.data.network.api.MarvelApi
 import com.hadiyarajesh.marvel_heroes.repository.datasource.ComicCharactersDataSource
 import com.hadiyarajesh.marvel_heroes.utility.Constants
-import com.hadiyarajesh.marvel_heroes.utility.debugLog
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

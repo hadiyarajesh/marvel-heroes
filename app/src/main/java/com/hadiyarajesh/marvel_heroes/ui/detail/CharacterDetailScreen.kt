@@ -30,10 +30,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.hadiyarajesh.marvel_heroes.R
 import com.hadiyarajesh.marvel_heroes.data.model.CharacterAndComics
 import com.hadiyarajesh.marvel_heroes.ui.bookmark.BookmarkViewModel
+import com.hadiyarajesh.marvel_heroes.ui.components.AnimatedShimmer
 import com.hadiyarajesh.marvel_heroes.ui.components.ErrorItem
 import com.hadiyarajesh.marvel_heroes.ui.components.LoadingIndicator
 import com.hadiyarajesh.marvel_heroes.ui.components.TopAppBarWithBackButton
@@ -44,18 +45,24 @@ import com.hadiyarajesh.marvel_heroes.utility.characterAndComics
 @Composable
 fun CharacterDetailRoute(
     characterId: Int,
-    characterDetailsViewModel: CharacterDetailsViewModel = hiltViewModel(),
+    detailsViewModel: CharacterDetailsViewModel = hiltViewModel(),
     bookmarkViewModel: BookmarkViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val characterUiState by characterDetailsViewModel.characterUiState.collectAsState()
-    val isBookmarked by characterDetailsViewModel.isBookmarked.collectAsState()
+    val characterUiState by detailsViewModel.characterUiState.collectAsState()
+    val isBookmarked by detailsViewModel.isBookmarked.collectAsState()
 
     CharacterDetailScreen(
         characterId = characterId,
         isBookmarked = isBookmarked,
         uiState = characterUiState,
-        detailsViewModel = characterDetailsViewModel,
+        onLoadInitialData = {
+            detailsViewModel.getCharacterDetails(characterId)
+            detailsViewModel.isBookmarked(characterId = characterId)
+        },
+        onRetryClick = {
+            detailsViewModel.getCharacterDetails(characterId)
+        },
         onBookmarkClick = { characterId ->
             bookmarkViewModel.bookmarkCharacter(characterId = characterId)
         },
@@ -67,14 +74,14 @@ fun CharacterDetailRoute(
 fun CharacterDetailScreen(
     characterId: Int,
     isBookmarked: Boolean,
-    detailsViewModel: CharacterDetailsViewModel = hiltViewModel(),
     uiState: CharacterDetailsScreenUiState,
+    onLoadInitialData: () -> Unit,
+    onRetryClick: () -> Unit,
     onBookmarkClick: (characterId: Int) -> Unit,
     onBackClick: () -> Unit
 ) {
     LaunchedEffect(key1 = Unit) {
-        detailsViewModel.getCharacterDetails(characterId)
-        detailsViewModel.isBookmarked(characterId = characterId)
+        onLoadInitialData()
     }
 
     Scaffold(
@@ -123,7 +130,7 @@ fun CharacterDetailScreen(
                         modifier = Modifier.fillMaxSize(),
                         text = uiState.msg,
                         showRetryButton = true,
-                        onRetryClick = { detailsViewModel.getCharacterDetails(characterId) }
+                        onRetryClick = onRetryClick
                     )
                 }
 
@@ -145,12 +152,12 @@ fun CharacterDetailsScreen(
                 .fillMaxWidth()
                 .height(300.dp)
         ) {
-            AsyncImage(
+            SubcomposeAsyncImage(
                 modifier = Modifier.fillMaxSize(),
                 model = CharacterUtility.getCharacterUrl(characterAndComics.character.thumbnail),
                 contentDescription = characterAndComics.character.name,
                 contentScale = ContentScale.Crop,
-                placeholder = painterResource(id = R.drawable.ic_filled_placeholder)
+                loading = { AnimatedShimmer() },
             )
         }
 
@@ -161,15 +168,19 @@ fun CharacterDetailsScreen(
         )
         VerticalSpacer(size = 4)
 
-        // For lots of characters, description is empty, so we can avoid drawing Text by checking this condition.
+        // Multiple characters has an empty description, so we can avoid drawing Text by checking this condition.
         if (characterAndComics.character.description.isNotEmpty()) {
             Text(text = characterAndComics.character.description)
         }
 
         VerticalSpacer(size = 16)
 
-        Text(text = stringResource(R.string.comics), style = MaterialTheme.typography.headlineSmall)
+        Text(
+            text = stringResource(R.string.comics),
+            style = MaterialTheme.typography.headlineSmall
+        )
 
+        // We're not using LazyColumn here, as we just want to display maximum of 5 items.
         characterAndComics.comic.items.take(5).forEach { item ->
             Card(
                 modifier = Modifier
@@ -189,7 +200,6 @@ fun CharacterDetailsScreen(
             }
             VerticalSpacer(size = 4)
         }
-
     }
 }
 

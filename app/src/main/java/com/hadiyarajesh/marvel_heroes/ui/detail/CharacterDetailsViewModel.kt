@@ -1,15 +1,15 @@
 package com.hadiyarajesh.marvel_heroes.ui.detail
 
-import javax.inject.Inject
-import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadiyarajesh.marvel_heroes.repository.bookmark.BookmarkRepository
 import com.hadiyarajesh.marvel_heroes.repository.character.CharacterRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class CharacterDetailsViewModel @Inject constructor(
@@ -38,7 +38,7 @@ class CharacterDetailsViewModel @Inject constructor(
                         CharacterDetailsScreenUiState.Error("Character with id $characterId not found")
                 }
             } catch (e: Exception) {
-                CharacterDetailsScreenUiState.Error("Something went wrong. ${e.message}")
+                CharacterDetailsScreenUiState.Error("Something went wrong. \n${e.message}")
             }
         }
     }

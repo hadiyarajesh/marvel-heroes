@@ -9,7 +9,7 @@ import com.hadiyarajesh.marvel_heroes.navigation.AppNavigation
 import com.hadiyarajesh.marvel_heroes.ui.theme.AppTheme
 
 @Composable
-fun App() {
+fun MarvelApp() {
     AppTheme {
         val navController = rememberNavController()
 

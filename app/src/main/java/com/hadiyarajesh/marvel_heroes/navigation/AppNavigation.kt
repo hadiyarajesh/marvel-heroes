@@ -11,6 +11,7 @@ import com.hadiyarajesh.marvel_heroes.ui.bookmark.BookmarkRoute
 import com.hadiyarajesh.marvel_heroes.ui.detail.CharacterDetailRoute
 import com.hadiyarajesh.marvel_heroes.ui.home.HomeRoute
 import com.hadiyarajesh.marvel_heroes.ui.search.SearchRoute
+import com.hadiyarajesh.marvel_heroes.utility.Constants
 
 @Composable
 fun AppNavigation(
@@ -32,14 +33,14 @@ fun AppNavigation(
             )
         }
 
-        composable(route = TopLevelDestination.CharacterDetails.route + "/{id}",
+        composable(route = TopLevelDestination.CharacterDetails.route + "/{${Constants.ID}}",
             arguments = listOf(
-                navArgument("id") {
+                navArgument(Constants.ID) {
                     type = NavType.IntType
                 }
             )
         ) { backStackEntry ->
-            val characterId = backStackEntry.arguments?.getInt("id") ?: return@composable
+            val characterId = backStackEntry.arguments?.getInt(Constants.ID) ?: return@composable
 
             CharacterDetailRoute(
                 characterId = characterId,

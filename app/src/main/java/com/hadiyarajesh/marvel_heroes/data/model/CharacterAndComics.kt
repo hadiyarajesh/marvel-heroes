@@ -6,7 +6,8 @@ import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
 import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicsEntity
 
 /**
- * An intermediate representation to retrieve ComicCharacter and Comics
+ * An intermediate representation to retrieve ComicCharacter and Comics combined
+ * as they're separate entities in the database.
  */
 data class CharacterAndComics(
     @Embedded

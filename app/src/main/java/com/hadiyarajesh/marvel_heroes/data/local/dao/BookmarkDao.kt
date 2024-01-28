@@ -11,9 +11,6 @@ interface BookmarkDao {
     @Upsert
     suspend fun upsertBookmark(bookmark: Bookmark)
 
-    @Query("UPDATE Bookmark SET isBookmarked = :isBookmarked WHERE characterId = :characterId")
-    suspend fun updateBookmark(characterId: Int, isBookmarked: Boolean)
-
     @Query("SELECT EXISTS(SELECT * FROM Bookmark WHERE characterId = :characterId)")
     suspend fun isBookmarkExists(characterId: Int): Boolean
 

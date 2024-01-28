@@ -57,7 +57,7 @@ fun SearchBar(
 fun SearchBarPreview() {
     SearchBar(
         modifier = Modifier.fillMaxWidth(),
-        value = "Search bar",
+        value = "Search",
         onValueChange = {},
         onBackClick = {},
         onClear = {}

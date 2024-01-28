@@ -3,7 +3,6 @@ package com.hadiyarajesh.marvel_heroes.ui.components
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -57,6 +56,9 @@ fun LoadingIndicator(
     }
 }
 
+/**
+ * Create an error view with optional retry button
+ */
 @Composable
 fun ErrorItem(
     text: String,

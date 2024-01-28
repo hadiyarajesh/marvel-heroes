@@ -3,7 +3,7 @@ package com.hadiyarajesh.marvel_heroes.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.hadiyarajesh.marvel_heroes.data.local.converter.GenericItemListConverter
+import com.hadiyarajesh.marvel_heroes.data.local.converter.ComicItemListConverter
 import com.hadiyarajesh.marvel_heroes.data.local.dao.BookmarkDao
 import com.hadiyarajesh.marvel_heroes.data.local.dao.CharacterRemoteKeyDao
 import com.hadiyarajesh.marvel_heroes.data.local.dao.ComicCharacterDao
@@ -23,7 +23,7 @@ import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicsEntity
         Bookmark::class
     ]
 )
-@TypeConverters(GenericItemListConverter::class)
+@TypeConverters(ComicItemListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun comicCharacterDao(): ComicCharacterDao
     abstract fun characterRemoteKeyDao(): CharacterRemoteKeyDao

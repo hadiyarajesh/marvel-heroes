@@ -1,4 +1,4 @@
-package com.hadiyarajesh.marvel_heroes.data.network
+package com.hadiyarajesh.marvel_heroes.data.network.api
 
 import com.hadiyarajesh.marvel_heroes.data.model.GetCharactersResponse
 import retrofit2.http.GET

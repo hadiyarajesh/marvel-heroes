@@ -26,7 +26,7 @@ interface ComicCharacterDao {
     suspend fun getComicCharacter(id: Int): ComicCharacterEntity?
 
     @Delete
-    suspend fun delete(comicCharacter: ComicCharacterEntity)
+    suspend fun deleteCharacter(comicCharacter: ComicCharacterEntity)
 
     @Query("DELETE FROM ComicCharacter")
     suspend fun deleteAllCharacters()

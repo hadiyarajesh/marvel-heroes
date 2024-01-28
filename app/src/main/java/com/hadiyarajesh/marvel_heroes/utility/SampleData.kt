@@ -1,10 +1,9 @@
 package com.hadiyarajesh.marvel_heroes.utility
 
 import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicCharacterEntity
+import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicItem
 import com.hadiyarajesh.marvel_heroes.data.local.entity.ComicsEntity
-import com.hadiyarajesh.marvel_heroes.data.local.entity.Item
 import com.hadiyarajesh.marvel_heroes.data.local.entity.Thumbnail
-import com.hadiyarajesh.marvel_heroes.data.local.entity.Url
 import com.hadiyarajesh.marvel_heroes.data.model.CharacterAndComics
 
 val comicCharacter1 = ComicCharacterEntity(
@@ -67,17 +66,17 @@ val comicCharacter5 = ComicCharacterEntity(
     resourceURI = "http://gateway.marvel.com/v1/public/characters/1009146",
 )
 
-val genericItem1 = Item(
+val comicItem1 = ComicItem(
     name = "Avengers: The Initiative (2007) #14",
     resourceURI = "http://gateway.marvel.com/v1/public/comics/21366"
 )
 
-val genericItem2 = Item(
+val comicItem2 = ComicItem(
     name = "Avengers: The Initiative (2007) #14 (SPOTLIGHT VARIANT)",
     resourceURI = "http://gateway.marvel.com/v1/public/comics/24571"
 )
 
-val genericItem3 = Item(
+val comicItem3 = ComicItem(
     name = "Avengers: The Initiative (2007) #15",
     resourceURI = "http://gateway.marvel.com/v1/public/comics/21546"
 )
@@ -89,7 +88,7 @@ val characterAndComics = CharacterAndComics(
         characterId = comicCharacter1.characterId,
         available = 12,
         collectionURI = "http://gateway.marvel.com/v1/public/characters/1011334/comics",
-        items = listOf(genericItem1, genericItem2, genericItem3),
+        items = listOf(comicItem1, comicItem2, comicItem3),
         returned = 12
     )
 )
