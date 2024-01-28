@@ -3,14 +3,15 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
-    namespace = "com.hadiyarajesh.composetemplate"
+    namespace = "com.hadiyarajesh.marvel_heroes"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.hadiyarajesh.composetemplate"
+        applicationId = "com.hadiyarajesh.marvel_heroes"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
@@ -66,6 +67,7 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(libs.bundles.room)
+    implementation(libs.room.paging)
     ksp(libs.room.compiler)
 
     implementation(libs.bundles.retrofit)
@@ -74,13 +76,9 @@ dependencies {
     implementation(libs.moshi)
     ksp(libs.moshi.kotlin.codegen)
 
-    implementation(libs.coil) {
-        because("An image loading library for Android backed by Kotlin Coroutines")
-    }
+    implementation(libs.androidx.paging.compose)
 
-    implementation(libs.flower) {
-        because("Flower simplifies networking and database caching on Android/Multiplatform")
-    }
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
