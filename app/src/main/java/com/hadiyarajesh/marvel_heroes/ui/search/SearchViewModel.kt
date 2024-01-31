@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,11 +24,9 @@ class SearchViewModel @Inject constructor(
     }
 
     // Perform a live search when user types in search bar
-    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    @OptIn(FlowPreview::class)
     val characters = _searchQuery
         .debounce(500)
         .filter { it.isNotBlank() }
-        .flatMapLatest { name ->
-            flowOf(characterRepository.searchCharacters(name))
-        }
+        .map { characterRepository.searchCharacters(it) }
 }
