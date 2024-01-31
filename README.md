@@ -1,8 +1,6 @@
 # Marvel’s Comic Characters App
 
-This repository contains the code for Marvel’s Comic Characters App assignment.
-
-It includes the following popular libraries:
+This repository contains the code for Marvel’s Comic Characters App assignment. It is created with MVVM architecture using Kotlin and includes the following popular libraries:
 
 - [Hilt](https://dagger.dev/hilt) - Hilt is a dependency injection library for Android that reduces
   the boilerplate of doing manual dependency injection in your project.
@@ -14,7 +12,6 @@ It includes the following popular libraries:
 - [Coil](https://github.com/coil-kt/coil) - Image loading for Android backed by Kotlin Coroutines.
 
 ## How to run
-
 To run this project,
 
 1. Visit [Marvel’s developer API](https://developer.marvel.com/docs) and create your API KEY
@@ -24,6 +21,12 @@ To run this project,
 apiPublicKey=YOUR_API_PUBLIC_KEY
 apiPrivateKey=YOUR_API_PRIVATE_KEY
 ```
+
+## Visuals
+See the video of app walkthrough [here](https://drive.google.com/file/d/10LLqC_uFY-aTlknuYT-FvXW9FE52vkmS/view)
+
+## Release build
+Get ready-to-install relase build of the app [here](https://drive.google.com/file/d/1W_9hlEe_RM7urL1oqNYbgXSugWXEMAW9/view)
 
 ## Annotation Processing
 
