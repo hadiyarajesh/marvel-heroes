@@ -1,6 +1,6 @@
 # Marvel’s Comic Characters App
 
-This repository contains the code for Marvel’s Comic Characters App assignment. It is created with MVVM architecture using Kotlin and includes the following popular libraries:
+This repository contains the code for Marvel’s Comic Characters App. It is created with MVVM architecture using Kotlin and includes the following popular libraries:
 
 - [Hilt](https://dagger.dev/hilt) - Hilt is a dependency injection library for Android that reduces
   the boilerplate of doing manual dependency injection in your project.
